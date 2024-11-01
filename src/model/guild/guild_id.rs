@@ -8,6 +8,7 @@ use nonmax::{NonMaxU16, NonMaxU8};
 #[cfg(feature = "model")]
 use crate::builder::{
     AddMember,
+    CreateAutoModRule,
     CreateChannel,
     CreateCommand,
     CreateScheduledEvent,
@@ -105,9 +106,9 @@ impl GuildId {
     pub async fn create_automod_rule(
         self,
         http: &Http,
-        builder: EditAutoModRule<'_>,
+        builder: CreateAutoModRule<'_>,
     ) -> Result<Rule> {
-        builder.execute(http, self, None).await
+        builder.execute(http, self).await
     }
 
     /// Edit an auto moderation [`Rule`], given its Id.
@@ -125,7 +126,7 @@ impl GuildId {
         rule_id: RuleId,
         builder: EditAutoModRule<'_>,
     ) -> Result<Rule> {
-        builder.execute(http, self, Some(rule_id)).await
+        builder.execute(http, self, rule_id).await
     }
 
     /// Deletes an auto moderation [`Rule`] from the guild.

@@ -138,7 +138,7 @@ async fn message(ctx: &Context, msg: Message) -> Result<(), serenity::Error> {
         guild_id
             .create_automod_rule(
                 &ctx.http,
-                EditAutoModRule::new().trigger(Trigger::Keyword {
+                CreateAutoModRule::new().trigger(Trigger::Keyword {
                     strings: vec!["badword".into()],
                     regex_patterns: vec!["b[o0]{2,}b(ie)?s?".into()],
                     allow_list: vec!["bob".into()],

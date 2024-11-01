@@ -5,6 +5,7 @@ use serde::Serialize;
 
 #[cfg(feature = "model")]
 use crate::builder::{
+    CreateAutoModRule,
     CreateChannel,
     CreateCommand,
     CreateSticker,
@@ -219,7 +220,7 @@ impl PartialGuild {
     pub async fn create_automod_rule(
         &self,
         http: &Http,
-        builder: EditAutoModRule<'_>,
+        builder: CreateAutoModRule<'_>,
     ) -> Result<Rule> {
         self.id.create_automod_rule(http, builder).await
     }

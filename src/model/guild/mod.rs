@@ -37,6 +37,7 @@ pub use self::welcome_screen::*;
 #[cfg(feature = "model")]
 use crate::builder::{
     AddMember,
+    CreateAutoModRule,
     CreateChannel,
     CreateCommand,
     CreateScheduledEvent,
@@ -321,7 +322,7 @@ impl Guild {
     pub async fn create_automod_rule(
         &self,
         http: &Http,
-        builder: EditAutoModRule<'_>,
+        builder: CreateAutoModRule<'_>,
     ) -> Result<Rule> {
         self.id.create_automod_rule(http, builder).await
     }

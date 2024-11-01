@@ -7,21 +7,21 @@ use crate::internal::prelude::*;
 use crate::model::guild::automod::EventType;
 use crate::model::prelude::*;
 
-/// A builder for editing guild AutoMod rules.
+/// A builder for creating guild AutoMod rules.
 ///
 /// # Examples
 ///
-/// See [`GuildId::edit_automod_rule`] for details.
+/// See [`GuildId::create_automod_rule`] for details.
 ///
-/// [Discord docs](https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule)
+/// [Discord docs](https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule)
 #[derive(Clone, Debug, Serialize)]
 #[must_use]
-pub struct EditAutoModRule<'a> {
+pub struct CreateAutoModRule<'a> {
     #[serde(skip_serializing_if = "Option::is_none")]
     name: Option<Cow<'a, str>>,
     event_type: EventType,
     #[serde(flatten, skip_serializing_if = "Option::is_none")]
-    trigger_metadata: Option<TriggerMetadata>,
+    trigger: Option<Trigger>,
     #[serde(skip_serializing_if = "Option::is_none")]
     actions: Option<Cow<'a, [Action]>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -35,7 +35,7 @@ pub struct EditAutoModRule<'a> {
     audit_log_reason: Option<&'a str>,
 }
 
-impl<'a> EditAutoModRule<'a> {
+impl<'a> CreateAutoModRule<'a> {
     /// Equivalent to [`Self::default`].
     pub fn new() -> Self {
         Self::default()
@@ -54,8 +54,10 @@ impl<'a> EditAutoModRule<'a> {
     }
 
     /// Set the type of content which can trigger the rule.
-    pub fn trigger_metadata(mut self, trigger: TriggerMetadata) -> Self {
-        self.trigger_metadata = Some(trigger);
+    ///
+    /// **Note**: The trigger type can't be edited after creation. Only its values.
+    pub fn trigger(mut self, trigger: Trigger) -> Self {
+        self.trigger = Some(trigger);
         self
     }
 
@@ -103,16 +105,16 @@ impl<'a> EditAutoModRule<'a> {
     ///
     /// [Manage Guild]: Permissions::MANAGE_GUILD
     #[cfg(feature = "http")]
-    pub async fn execute(self, http: &Http, guild_id: GuildId, rule_id: RuleId) -> Result<Rule> {
-        http.edit_automod_rule(guild_id, rule_id, &self, self.audit_log_reason).await
+    pub async fn execute(self, http: &Http, guild_id: GuildId) -> Result<Rule> {
+        http.create_automod_rule(guild_id, &self, self.audit_log_reason).await
     }
 }
 
-impl Default for EditAutoModRule<'_> {
+impl Default for CreateAutoModRule<'_> {
     fn default() -> Self {
         Self {
             name: None,
-            trigger_metadata: None,
+            trigger: None,
             actions: None,
             enabled: None,
             exempt_roles: None,
