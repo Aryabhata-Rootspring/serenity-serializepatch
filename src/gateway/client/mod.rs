@@ -165,7 +165,9 @@ impl ClientBuilder {
 
     /// Sets the time to wait between starting shards.
     ///
-    /// This should only be used when using a gateway proxy, such as [Sandwich] or [Twilight Gateway Proxy], as otherwise this will lead to gateway disconnects if the shard start rate limit is not respected.
+    /// This should only be used when using a gateway proxy, such as [Sandwich] or [Twilight Gateway
+    /// Proxy], as otherwise this will lead to gateway disconnects if the shard start rate limit is
+    /// not respected.
     ///
     /// [Sandwich]:  https://github.com/WelcomerTeam/Sandwich-Daemon
     /// [Twilight Gateway Proxy]: https://github.com/Gelbpunkt/gateway-proxy
