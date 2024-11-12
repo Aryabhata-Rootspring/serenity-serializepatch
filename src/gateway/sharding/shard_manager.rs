@@ -87,6 +87,7 @@ pub const DEFAULT_WAIT_BETWEEN_SHARD_START: Duration = Duration::from_secs(5);
 ///     intents: GatewayIntents::non_privileged(),
 ///     presence: None,
 ///     max_concurrency,
+///     wait_time_between_shard_start: DEFAULT_WAIT_BETWEEN_SHARD_START
 /// });
 /// # Ok(())
 /// # }
