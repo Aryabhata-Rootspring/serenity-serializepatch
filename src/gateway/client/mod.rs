@@ -163,8 +163,12 @@ impl ClientBuilder {
         self.framework.as_deref()
     }
 
-    /// Sets the time to wait between starting shards. This is useful when using proxies such
-    /// as twilight or sandwich
+    /// Sets the time to wait between starting shards.
+    ///
+    /// This should only be used when using a gateway proxy, such as [Sandwich] or [Twilight Gateway Proxy], as otherwise this will lead to gateway disconnects if the shard start rate limit is not respected.
+    ///
+    /// [Sandwich]:  https://github.com/WelcomerTeam/Sandwich-Daemon
+    /// [Twilight Gateway Proxy]: https://github.com/Gelbpunkt/gateway-proxy
     pub fn wait_time_between_shard_start(mut self, wait_time: Duration) -> Self {
         self.wait_time_between_shard_start = wait_time;
         self
