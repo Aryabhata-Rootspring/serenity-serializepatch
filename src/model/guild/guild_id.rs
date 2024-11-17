@@ -1598,6 +1598,19 @@ impl GuildId {
     pub async fn get_active_threads(self, http: &Http) -> Result<ThreadsData> {
         http.get_guild_active_threads(self).await
     }
+
+    /// Returns a list of the guild's soundboard sounds.
+    ///
+    /// Includes user fields if the bot has the `CREATE_GUILD_EXPRESSIONS` or
+    /// `MANAGE_GUILD_EXPRESSIONS` permission.
+    ///
+    /// # Errors
+    ///
+    /// Returns an [`Error::Http`] if there is an error in the deserialization, or if the bot
+    /// issuing the request is not in the guild.
+    pub async fn list_guild_soundboard_sounds(self, http: &Http) -> Result<Vec<SoundboardSound>> {
+        http.list_guild_soundboard_sounds(self).await
+    }
 }
 
 impl From<PartialGuild> for GuildId {

@@ -4210,28 +4210,6 @@ impl Http {
         self.fire(request).await
     }
 
-    /// Send a soundboard sound to a voice channel the user is connected to. Fires a Voice Channel
-    /// Effect Send Gateway event.
-    pub async fn send_soundboard_sound(
-        &self,
-        channel_id: ChannelId,
-        map: &impl serde::Serialize,
-    ) -> Result<()> {
-        let body = to_vec(map)?;
-
-        self.wind(204, Request {
-            body: Some(body),
-            multipart: None,
-            headers: None,
-            method: LightMethod::Post,
-            route: Route::SendSoundboardSound {
-                channel_id,
-            },
-            params: None,
-        })
-        .await
-    }
-
     /// Pins a message in a channel.
     pub async fn pin_message(
         &self,
@@ -4390,6 +4368,75 @@ impl Http {
             params: None,
         })
         .await
+    }
+
+    /// Send a soundboard sound to a voice channel the user is connected to.
+    /// Fires a Voice Channel Effect Send Gateway event.
+    pub async fn send_soundboard_sound(
+        &self,
+        channel_id: ChannelId,
+        map: &impl serde::Serialize,
+    ) -> Result<()> {
+        let body = to_vec(map)?;
+
+        self.wind(204, Request {
+            body: Some(body),
+            multipart: None,
+            headers: None,
+            method: LightMethod::Post,
+            route: Route::SendSoundboardSound {
+                channel_id,
+            },
+            params: None,
+        })
+        .await
+    }
+
+    /// Returns an array of soundboard sound objects that can be used by all users.
+    pub async fn list_default_soundboard_sounds(&self) -> Result<Vec<SoundboardSound>> {
+        self.fire(Request {
+            body: None,
+            multipart: None,
+            headers: None,
+            method: LightMethod::Get,
+            route: Route::DefaultSoundboardSounds,
+            params: None,
+        })
+        .await
+    }
+
+    /// Returns a list of the guild's soundboard sounds.
+    ///
+    /// Includes user fields if the bot has the `CREATE_GUILD_EXPRESSIONS` or
+    /// `MANAGE_GUILD_EXPRESSIONS` permission.
+    pub async fn list_guild_soundboard_sounds(
+        &self,
+        guild_id: GuildId,
+    ) -> Result<Vec<SoundboardSound>> {
+        // Why, discord...
+        #[derive(Deserialize)]
+        struct ListGuildSoundboardSounds {
+            items: Vec<SoundboardSound>,
+        }
+
+        let mut value: ListGuildSoundboardSounds = self
+            .fire(Request {
+                body: None,
+                multipart: None,
+                headers: None,
+                method: LightMethod::Get,
+                route: Route::ListGuildSoundboardSounds {
+                    guild_id,
+                },
+                params: None,
+            })
+            .await?;
+
+        for sound in &mut value.items {
+            sound.guild_id = Some(guild_id);
+        }
+
+        Ok(value.items)
     }
 
     /// Fires off a request, deserializing the response reader via the given type bound.

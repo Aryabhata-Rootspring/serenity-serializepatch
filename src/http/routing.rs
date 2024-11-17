@@ -409,6 +409,14 @@ routes! ('a, {
     api!("/channels/{}/send-soundboard-sound", channel_id),
     Some(RatelimitingKind::PathAndId(GenericId::new(channel_id.get())));
 
+    DefaultSoundboardSounds,
+    api!("/soundboard-default-sounds"),
+    Some(RatelimitingKind::Path);
+
+    ListGuildSoundboardSounds { guild_id: GuildId },
+    api!("/guilds/{}/soundboard-sounds", guild_id),
+    Some(RatelimitingKind::PathAndId(GenericId::new(guild_id.get())));
+
     User { user_id: UserId },
     api!("/users/{}", user_id),
     Some(RatelimitingKind::Path);
