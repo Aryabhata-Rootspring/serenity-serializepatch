@@ -4210,6 +4210,28 @@ impl Http {
         self.fire(request).await
     }
 
+    /// Send a soundboard sound to a voice channel the user is connected to. Fires a Voice Channel
+    /// Effect Send Gateway event.
+    pub async fn send_soundboard_sound(
+        &self,
+        channel_id: ChannelId,
+        map: &impl serde::Serialize,
+    ) -> Result<()> {
+        let body = to_vec(map)?;
+
+        self.wind(204, Request {
+            body: Some(body),
+            multipart: None,
+            headers: None,
+            method: LightMethod::Post,
+            route: Route::SendSoundboardSound {
+                channel_id,
+            },
+            params: None,
+        })
+        .await
+    }
+
     /// Pins a message in a channel.
     pub async fn pin_message(
         &self,

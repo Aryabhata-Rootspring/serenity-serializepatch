@@ -6,6 +6,7 @@ use std::sync::Arc;
 #[cfg(feature = "model")]
 use futures::stream::Stream;
 
+use crate::all::SendSoundboardSound;
 #[cfg(feature = "model")]
 use crate::builder::{
     CreateAttachment,
@@ -1054,6 +1055,19 @@ impl ChannelId {
     /// If the message does not have a poll, or if the poll was not created by the current user.
     pub async fn end_poll(self, http: &Http, message_id: MessageId) -> Result<Message> {
         http.expire_poll(self, message_id).await
+    }
+
+    /// Sends a soundboard sound.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error::Http`] if there was an error sending the sound.
+    pub async fn send_soundboard_sound(
+        self,
+        http: &Http,
+        builder: SendSoundboardSound,
+    ) -> Result<()> {
+        builder.execute(http, self).await
     }
 }
 

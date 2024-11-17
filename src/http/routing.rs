@@ -405,6 +405,10 @@ routes! ('a, {
     api!("/sticker-packs/{}", sticker_pack_id),
     Some(RatelimitingKind::Path);
 
+    SendSoundboardSound { channel_id: ChannelId },
+    api!("/channels/{}/send-soundboard-sound", channel_id),
+    Some(RatelimitingKind::PathAndId(GenericId::new(channel_id.get())));
+
     User { user_id: UserId },
     api!("/users/{}", user_id),
     Some(RatelimitingKind::Path);

@@ -77,6 +77,7 @@ mod edit_webhook_message;
 mod execute_webhook;
 mod get_entitlements;
 mod get_messages;
+mod send_soundboard_sound;
 
 pub use add_member::*;
 pub use bot_auth_parameters::*;
@@ -120,6 +121,7 @@ pub use edit_webhook_message::*;
 pub use execute_webhook::*;
 pub use get_entitlements::*;
 pub use get_messages::*;
+pub use send_soundboard_sound::*;
 
 macro_rules! button_and_select_menu_convenience_methods {
     ($self:ident $(. $components_path:tt)+) => {

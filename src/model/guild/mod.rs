@@ -11,6 +11,7 @@ mod partial_guild;
 mod premium_tier;
 mod role;
 mod scheduled_event;
+mod soundboard;
 mod system_channel;
 mod welcome_screen;
 
@@ -30,6 +31,7 @@ pub use self::partial_guild::*;
 pub use self::premium_tier::*;
 pub use self::role::*;
 pub use self::scheduled_event::*;
+pub use self::soundboard::*;
 pub use self::system_channel::*;
 pub use self::welcome_screen::*;
 #[cfg(feature = "model")]

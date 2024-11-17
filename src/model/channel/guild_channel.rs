@@ -2,6 +2,7 @@ use std::fmt;
 
 use nonmax::{NonMaxU16, NonMaxU32, NonMaxU8};
 
+use crate::all::SendSoundboardSound;
 #[cfg(feature = "model")]
 use crate::builder::{
     CreateMessage,
@@ -504,6 +505,19 @@ impl GuildChannel {
         }
 
         self.id.delete_stage_instance(http, reason).await
+    }
+
+    /// Sends a soundboard sound.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error::Http`] if there was an error sending the sound.
+    pub async fn send_soundboard_sound(
+        &self,
+        http: &Http,
+        builder: SendSoundboardSound,
+    ) -> Result<()> {
+        self.id.send_soundboard_sound(http, builder).await
     }
 }
 

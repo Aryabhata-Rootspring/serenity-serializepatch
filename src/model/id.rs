@@ -190,6 +190,7 @@ id_u64! {
     StickerPackId: "An identifier for a sticker pack.";
     StickerPackBannerId: "An identifier for a sticker pack banner.";
     SkuId: "An identifier for a SKU.";
+    SoundboardSoundId: "An identifier for a soundboard sound.";
     UserId: "An identifier for a User";
     WebhookId: "An identifier for a [`Webhook`]";
     AuditLogEntryId: "An identifier for an audit log entry.";
