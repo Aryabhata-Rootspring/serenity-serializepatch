@@ -333,7 +333,7 @@ impl Http {
     /// days.
     ///
     /// Passing a `delete_message_seconds` of `0` is equivalent to not removing any messages. Up to
-    /// `7` days' (or 604800 seconds) worth of messages may be deleted.
+    /// `604800 seconds` (or 7 days) worth of messages may be deleted.
     pub async fn ban_user(
         &self,
         guild_id: GuildId,

@@ -144,8 +144,13 @@ impl Member {
     /// return [`Error::Http`] if the current user lacks permission to ban this member.
     ///
     /// [Ban Members]: Permissions::BAN_MEMBERS
-    pub async fn ban(&self, http: &Http, dmd: u8, audit_log_reason: Option<&str>) -> Result<()> {
-        self.guild_id.ban(http, self.user.id, dmd, audit_log_reason).await
+    pub async fn ban(
+        &self,
+        http: &Http,
+        delete_message_seconds: u32,
+        audit_log_reason: Option<&str>,
+    ) -> Result<()> {
+        self.guild_id.ban(http, self.user.id, delete_message_seconds, audit_log_reason).await
     }
 
     /// Determines the member's colour.

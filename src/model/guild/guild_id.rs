@@ -165,8 +165,8 @@ impl GuildId {
         builder.execute(http, self, user_id).await
     }
 
-    /// Ban a [`User`] from the guild, deleting a number of days' worth of messages (`dmd`) between
-    /// the range 0 and 7.
+    /// Ban a [`User`] from the guild, deleting a number of seconds' worth of messages
+    /// (`delete_message_seconds`) between the range 0 and 604800.
     ///
     /// **Note**: Requires the [Ban Members] permission.
     ///
@@ -182,7 +182,7 @@ impl GuildId {
     /// # let http: Http = unimplemented!();
     /// # let user = UserId::new(1);
     /// // assuming a `user` has already been bound
-    /// let _ = GuildId::new(81384788765712384).ban(&http, user, 4, None).await;
+    /// let _ = GuildId::new(81384788765712384).ban(&http, user, 345600, None).await;
     /// # Ok(())
     /// # }
     /// ```
@@ -195,13 +195,27 @@ impl GuildId {
     /// Also can return [`Error::Http`] if the current user lacks permission.
     ///
     /// [Ban Members]: Permissions::BAN_MEMBERS
-    pub async fn ban(self, http: &Http, user: UserId, dmd: u8, reason: Option<&str>) -> Result<()> {
-        Maximum::DeleteMessageDays.check_overflow(dmd.into())?;
+    pub async fn ban(
+        self,
+        http: &Http,
+        user: UserId,
+        delete_message_seconds: u32,
+        reason: Option<&str>,
+    ) -> Result<()> {
+        // Convert to usize for check overflow
+        let delete_message_seconds_usize =
+            usize::try_from(delete_message_seconds).map_err(|_| {
+                Error::Model(ModelError::TooLarge {
+                    maximum: Maximum::DeleteMessageSeconds,
+                    value: usize::MAX,
+                })
+            })?;
+        Maximum::DeleteMessageSeconds.check_overflow(delete_message_seconds_usize)?;
         if let Some(reason) = reason {
             Maximum::AuditLogReason.check_overflow(reason.len())?;
         }
 
-        http.ban_user(self, user, dmd, reason).await
+        http.ban_user(self, user, delete_message_seconds, reason).await
     }
 
     /// Bans multiple users from the guild, returning the users that were and weren't banned, and
