@@ -4432,11 +4432,39 @@ impl Http {
             })
             .await?;
 
+        // Ensure that the guild_id is set on all sounds
         for sound in &mut value.items {
             sound.guild_id = Some(guild_id);
         }
 
         Ok(value.items)
+    }
+
+    /// Returns a soundboard sound object for the given sound id.
+    ///
+    /// Includes the user field if the bot has the `CREATE_GUILD_EXPRESSIONS` or
+    /// `MANAGE_GUILD_EXPRESSIONS` permission.
+    pub async fn get_guild_soundboard_sound(
+        &self,
+        guild_id: GuildId,
+        sound_id: SoundboardSoundId,
+    ) -> Result<SoundboardSound> {
+        let mut value: SoundboardSound = self
+            .fire(Request {
+                body: None,
+                multipart: None,
+                headers: None,
+                method: LightMethod::Get,
+                route: Route::GuildSoundboardSound {
+                    guild_id,
+                    sound_id,
+                },
+                params: None,
+            })
+            .await?;
+
+        value.guild_id = Some(guild_id);
+        Ok(value)
     }
 
     /// Fires off a request, deserializing the response reader via the given type bound.

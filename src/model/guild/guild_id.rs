@@ -1611,6 +1611,23 @@ impl GuildId {
     pub async fn list_guild_soundboard_sounds(self, http: &Http) -> Result<Vec<SoundboardSound>> {
         http.list_guild_soundboard_sounds(self).await
     }
+
+    /// Returns a soundboard sound object for the given sound id.
+    ///
+    /// Includes the user field if the bot has the `CREATE_GUILD_EXPRESSIONS` or
+    /// `MANAGE_GUILD_EXPRESSIONS` permission.
+    ///
+    /// # Errors
+    ///
+    /// Returns an [`Error::Http`] if there is an error in the deserialization, or if the bot
+    /// issuing the request is not in the guild.
+    pub async fn get_guild_soundboard_sound(
+        self,
+        http: &Http,
+        sound_id: SoundboardSoundId,
+    ) -> Result<SoundboardSound> {
+        http.get_guild_soundboard_sound(self, sound_id).await
+    }
 }
 
 impl From<PartialGuild> for GuildId {

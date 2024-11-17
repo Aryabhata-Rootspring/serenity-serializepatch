@@ -417,6 +417,10 @@ routes! ('a, {
     api!("/guilds/{}/soundboard-sounds", guild_id),
     Some(RatelimitingKind::PathAndId(GenericId::new(guild_id.get())));
 
+    GuildSoundboardSound { guild_id: GuildId, sound_id: SoundboardSoundId },
+    api!("/guilds/{}/soundboard-sounds/{}", guild_id, sound_id),
+    Some(RatelimitingKind::PathAndId(GenericId::new(guild_id.get())));
+
     User { user_id: UserId },
     api!("/users/{}", user_id),
     Some(RatelimitingKind::Path);
