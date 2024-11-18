@@ -40,7 +40,7 @@ impl SoundboardSoundId {
     /// Print the direct link to the given soundboard sound:
     ///
     /// ```rust,no_run
-    /// # use serenity::model::soundboard::SoundboardSound;
+    /// # use serenity::model::guild::soundboard::SoundboardSound;
     /// #
     /// # fn run(sound: SoundboardSound) {
     /// // assuming sound has been set already
