@@ -6,7 +6,6 @@ use std::sync::Arc;
 #[cfg(feature = "model")]
 use futures::stream::Stream;
 
-use crate::all::SendSoundboardSound;
 #[cfg(feature = "model")]
 use crate::builder::{
     CreateAttachment,
@@ -21,6 +20,7 @@ use crate::builder::{
     EditStageInstance,
     EditThread,
     GetMessages,
+    SendSoundboardSound,
 };
 #[cfg(all(feature = "cache", feature = "model"))]
 use crate::cache::Cache;
