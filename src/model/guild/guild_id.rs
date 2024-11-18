@@ -1659,6 +1659,21 @@ impl GuildId {
     ) -> Result<SoundboardSound> {
         builder.execute(http, self, sound_id).await
     }
+
+    /// Deletes a soundboard sound object on the guild.
+    ///
+    /// # Errors
+    ///
+    /// Returns an [`Error::Http`] if there is an error in the deserialization, or if the bot
+    /// issuing the request is not in the guild.
+    pub async fn delete_guild_soundboard_sound(
+        self,
+        sound_id: SoundboardSoundId,
+        http: &Http,
+        audit_log_reason: Option<&str>,
+    ) -> Result<()> {
+        http.delete_guild_soundboard_sound(self, sound_id, audit_log_reason).await
+    }
 }
 
 impl From<PartialGuild> for GuildId {

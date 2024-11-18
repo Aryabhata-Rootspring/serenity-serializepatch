@@ -4519,6 +4519,27 @@ impl Http {
         Ok(value)
     }
 
+    /// Deletes a guild soundboard sound.
+    pub async fn delete_guild_soundboard_sound(
+        &self,
+        guild_id: GuildId,
+        sound_id: SoundboardSoundId,
+        audit_log_reason: Option<&str>,
+    ) -> Result<()> {
+        self.wind(204, Request {
+            body: None,
+            multipart: None,
+            headers: audit_log_reason.map(reason_into_header),
+            method: LightMethod::Delete,
+            route: Route::GuildSoundboardSound {
+                guild_id,
+                sound_id,
+            },
+            params: None,
+        })
+        .await
+    }
+
     /// Fires off a request, deserializing the response reader via the given type bound.
     ///
     /// If you don't need to deserialize the response and want the response instance itself, use
