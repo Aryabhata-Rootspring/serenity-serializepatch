@@ -4425,7 +4425,7 @@ impl Http {
                 multipart: None,
                 headers: None,
                 method: LightMethod::Get,
-                route: Route::ListGuildSoundboardSounds {
+                route: Route::GuildSoundboardSounds {
                     guild_id,
                 },
                 params: None,
@@ -4458,6 +4458,31 @@ impl Http {
                 route: Route::GuildSoundboardSound {
                     guild_id,
                     sound_id,
+                },
+                params: None,
+            })
+            .await?;
+
+        value.guild_id = Some(guild_id);
+        Ok(value)
+    }
+
+    /// Creates a guild soundboard sound.
+    pub async fn create_guild_soundboard_sound(
+        &self,
+        guild_id: GuildId,
+        map: &impl serde::Serialize,
+        audit_log_reason: Option<&str>,
+    ) -> Result<SoundboardSound> {
+        let body = to_vec(map)?;
+        let mut value: SoundboardSound = self
+            .fire(Request {
+                body: Some(body),
+                multipart: None,
+                headers: audit_log_reason.map(reason_into_header),
+                method: LightMethod::Post,
+                route: Route::GuildSoundboardSounds {
+                    guild_id,
                 },
                 params: None,
             })

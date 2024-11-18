@@ -10,6 +10,7 @@ use crate::builder::{
     AddMember,
     CreateChannel,
     CreateCommand,
+    CreateGuildSoundboardSound,
     CreateScheduledEvent,
     CreateSticker,
     EditAutoModRule,
@@ -1627,6 +1628,20 @@ impl GuildId {
         sound_id: SoundboardSoundId,
     ) -> Result<SoundboardSound> {
         http.get_guild_soundboard_sound(self, sound_id).await
+    }
+
+    /// Creates a soundboard sound object on the guild.
+    ///
+    /// # Errors
+    ///
+    /// Returns an [`Error::Http`] if there is an error in the deserialization, or if the bot
+    /// issuing the request is not in the guild.
+    pub async fn create_guild_soundboard_sound(
+        self,
+        http: &Http,
+        builder: CreateGuildSoundboardSound<'_>,
+    ) -> Result<SoundboardSound> {
+        builder.execute(http, self).await
     }
 }
 

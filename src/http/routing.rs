@@ -413,7 +413,7 @@ routes! ('a, {
     api!("/soundboard-default-sounds"),
     Some(RatelimitingKind::Path);
 
-    ListGuildSoundboardSounds { guild_id: GuildId },
+    GuildSoundboardSounds { guild_id: GuildId },
     api!("/guilds/{}/soundboard-sounds", guild_id),
     Some(RatelimitingKind::PathAndId(GenericId::new(guild_id.get())));
 
