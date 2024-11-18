@@ -11,7 +11,7 @@ mod partial_guild;
 mod premium_tier;
 mod role;
 mod scheduled_event;
-mod soundboard;
+pub mod soundboard;
 mod system_channel;
 mod welcome_screen;
 
