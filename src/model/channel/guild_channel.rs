@@ -2,7 +2,6 @@ use std::fmt;
 
 use nonmax::{NonMaxU16, NonMaxU32, NonMaxU8};
 
-use crate::all::SendSoundboardSound;
 #[cfg(feature = "model")]
 use crate::builder::{
     CreateMessage,
@@ -12,6 +11,7 @@ use crate::builder::{
     EditStageInstance,
     EditThread,
     EditVoiceState,
+    SendSoundboardSound
 };
 #[cfg(feature = "cache")]
 use crate::cache::{self, Cache};
