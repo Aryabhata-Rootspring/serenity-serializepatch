@@ -17,6 +17,7 @@ use crate::builder::{
     EditCommand,
     EditCommandPermissions,
     EditGuild,
+    EditGuildSoundboardSound,
     EditGuildWelcomeScreen,
     EditGuildWidget,
     EditMember,
@@ -1642,6 +1643,21 @@ impl GuildId {
         builder: CreateGuildSoundboardSound<'_>,
     ) -> Result<SoundboardSound> {
         builder.execute(http, self).await
+    }
+
+    /// Edits a soundboard sound object on the guild.
+    ///
+    /// # Errors
+    ///
+    /// Returns an [`Error::Http`] if there is an error in the deserialization, or if the bot
+    /// issuing the request is not in the guild.
+    pub async fn edit_guild_soundboard_sound(
+        self,
+        sound_id: SoundboardSoundId,
+        http: &Http,
+        builder: EditGuildSoundboardSound<'_>,
+    ) -> Result<SoundboardSound> {
+        builder.execute(http, self, sound_id).await
     }
 }
 

@@ -4492,6 +4492,33 @@ impl Http {
         Ok(value)
     }
 
+    /// Edits a guild soundboard sound.
+    pub async fn edit_guild_soundboard_sound(
+        &self,
+        guild_id: GuildId,
+        sound_id: SoundboardSoundId,
+        map: &impl serde::Serialize,
+        audit_log_reason: Option<&str>,
+    ) -> Result<SoundboardSound> {
+        let body = to_vec(map)?;
+        let mut value: SoundboardSound = self
+            .fire(Request {
+                body: Some(body),
+                multipart: None,
+                headers: audit_log_reason.map(reason_into_header),
+                method: LightMethod::Patch,
+                route: Route::GuildSoundboardSound {
+                    guild_id,
+                    sound_id,
+                },
+                params: None,
+            })
+            .await?;
+
+        value.guild_id = Some(guild_id);
+        Ok(value)
+    }
+
     /// Fires off a request, deserializing the response reader via the given type bound.
     ///
     /// If you don't need to deserialize the response and want the response instance itself, use
