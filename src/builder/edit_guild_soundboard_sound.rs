@@ -10,10 +10,15 @@ use crate::model::prelude::*;
 #[derive(Default, serde::Serialize, Clone, Debug)]
 #[must_use]
 pub struct EditGuildSoundboardSound<'a> {
+    #[serde(skip_serializing_if = "Option::is_none")]
     name: Option<Cow<'static, str>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     volume: Option<f64>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     emoji_id: Option<EmojiId>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     emoji_name: Option<Cow<'static, str>>,
+    #[serde(skip)]
     audit_log_reason: Option<&'a str>,
 }
 

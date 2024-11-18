@@ -12,10 +12,14 @@ use crate::model::prelude::*;
 #[must_use]
 pub struct CreateGuildSoundboardSound<'a> {
     name: Cow<'static, str>,
-    sound: String,
+    sound: Cow<'static, str>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     volume: Option<f64>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     emoji_id: Option<EmojiId>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     emoji_name: Option<Cow<'static, str>>,
+    #[serde(skip)]
     audit_log_reason: Option<&'a str>,
 }
 
@@ -24,7 +28,7 @@ impl<'a> CreateGuildSoundboardSound<'a> {
     pub fn new(name: impl Into<Cow<'static, str>>, sound: &CreateAttachment<'a>) -> Self {
         Self {
             name: name.into(),
-            sound: sound.to_base64(),
+            sound: sound.to_base64().into(),
             volume: None,
             emoji_id: None,
             emoji_name: None,
@@ -45,7 +49,7 @@ impl<'a> CreateGuildSoundboardSound<'a> {
     ///
     /// **Note**: Must be a MPG or OGG, max 512 KB and max duration of 5.2 secons.
     pub fn sound(mut self, sound: &CreateAttachment<'a>) -> Self {
-        self.sound = sound.to_base64();
+        self.sound = sound.to_base64().into();
         self
     }
 

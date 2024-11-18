@@ -11,6 +11,7 @@ use crate::model::prelude::*;
 #[must_use]
 pub struct SendSoundboardSound {
     sound_id: SoundboardSoundId,
+    #[serde(skip_serializing_if = "Option::is_none")]
     source_guild_id: Option<GuildId>,
 }
 
