@@ -501,6 +501,21 @@ event_handler! {
 
     /// Dispatched when an HTTP rate limit is hit
     Ratelimit { data: RatelimitInfo } => async fn ratelimit(&self);
+
+    /// Sent when a guild soundboard sound is created.
+    GuildSoundboardSoundCreate { sound: SoundboardSound, guild_id: GuildId } => async fn guild_soundboard_sound_create(&self, ctx: Context);
+
+    /// Sent when a guild soundboard sound is updated.
+    GuildSoundboardSoundUpdate { sound: SoundboardSound, guild_id: GuildId } => async fn guild_soundboard_sound_update(&self, ctx: Context);
+
+    /// Sent when a guild soundboard sound is deleted.
+    GuildSoundboardSoundDelete { sound_id: SoundboardSoundId, guild_id: GuildId } => async fn guild_soundboard_sound_delete(&self, ctx: Context);
+
+    /// Sent when multiple guild soundboard sounds are updated.
+    GuildSoundboardSoundsUpdate { sounds: Vec<SoundboardSound>, guild_id: GuildId } => async fn guild_soundboard_sounds_update(&self, ctx: Context);
+
+    /// Sent when someone sends an effect, such as an emoji reaction or a soundboard sound, in a voice channel the current user is connected to.
+    VoiceChannelEffectSend { event: VoiceChannelEffectSendEvent } => async fn voice_channel_effect_send(&self, ctx: Context);
 }
 
 /// This core trait for handling raw events

@@ -476,6 +476,25 @@ fn update_cache_with_event(
         Event::MessagePollVoteRemove(event) => FullEvent::MessagePollVoteRemove {
             event,
         },
+        Event::GuildSoundboardSoundCreate(event) => FullEvent::GuildSoundboardSoundCreate {
+            sound: event.soundboard_sound,
+            guild_id: event.guild_id,
+        },
+        Event::GuildSoundboardSoundUpdate(event) => FullEvent::GuildSoundboardSoundUpdate {
+            sound: event.soundboard_sound,
+            guild_id: event.guild_id,
+        },
+        Event::GuildSoundboardSoundDelete(event) => FullEvent::GuildSoundboardSoundDelete {
+            sound_id: event.sound_id,
+            guild_id: event.guild_id,
+        },
+        Event::GuildSoundboardSoundsUpdate(event) => FullEvent::GuildSoundboardSoundsUpdate {
+            sounds: event.soundboard_sounds,
+            guild_id: event.guild_id,
+        },
+        Event::VoiceChannelEffectSend(event) => FullEvent::VoiceChannelEffectSend {
+            event,
+        },
     };
 
     (event, extra_event)

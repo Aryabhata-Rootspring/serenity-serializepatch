@@ -1067,6 +1067,56 @@ pub struct MessagePollVoteRemoveEvent {
     pub answer_id: AnswerId,
 }
 
+/// Requires [`GatewayIntents::GUILD_EXPRESSIONS`].
+///
+/// [Discord docs](https://discord.com/developers/docs/events/gateway-events#guild-soundboard-sound-create).
+#[cfg_attr(feature = "typesize", derive(typesize::derive::TypeSize))]
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[non_exhaustive]
+pub struct GuildSoundboardSoundCreateUpdateEvent {
+    pub soundboard_sound: SoundboardSound,
+    pub guild_id: GuildId,
+}
+
+/// Requires [`GatewayIntents::GUILD_EXPRESSIONS`].
+///
+/// [Discord docs](https://discord.com/developers/docs/events/gateway-events#guild-soundboard-sounds-update).
+#[cfg_attr(feature = "typesize", derive(typesize::derive::TypeSize))]
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[non_exhaustive]
+pub struct GuildSoundboardSoundsUpdateEvent {
+    pub soundboard_sounds: Vec<SoundboardSound>,
+    pub guild_id: GuildId,
+}
+
+/// Requires [`GatewayIntents::GUILD_EXPRESSIONS`].
+///
+/// [Discord docs](https://discord.com/developers/docs/events/gateway-events#guild-soundboard-sounds-update).
+#[cfg_attr(feature = "typesize", derive(typesize::derive::TypeSize))]
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[non_exhaustive]
+pub struct GuildSoundboardSoundDeleteEvent {
+    pub sound_id: SoundboardSoundId,
+    pub guild_id: GuildId,
+}
+
+/// Requires [`GatewayIntents::GUILD_EXPRESSIONS`].
+///
+/// [Discord docs](https://discord.com/developers/docs/events/gateway-events#guild-soundboard-sounds-update).
+#[cfg_attr(feature = "typesize", derive(typesize::derive::TypeSize))]
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[non_exhaustive]
+pub struct VoiceChannelEffectSendEvent {
+    pub channel_id: ChannelId,
+    pub guild_id: GuildId,
+    pub user_id: UserId,
+    pub emoji: Option<Emoji>,
+    pub animation_type: Option<i64>, // TODO
+    pub animation_id: Option<i64>,
+    pub sound_id: Option<SoundboardSoundId>,
+    pub sound_volume: Option<f64>,
+}
+
 /// [Discord docs](https://discord.com/developers/docs/topics/gateway-events#payload-structure).
 #[cfg_attr(feature = "typesize", derive(typesize::derive::TypeSize))]
 #[derive(Debug, Clone, Serialize)]
@@ -1325,6 +1375,17 @@ pub enum Event {
     MessagePollVoteAdd(MessagePollVoteAddEvent),
     /// A user has removed a previous vote on a Message Poll.
     MessagePollVoteRemove(MessagePollVoteRemoveEvent),
+    /// Sent when a guild soundboard sound is created
+    GuildSoundboardSoundCreate(GuildSoundboardSoundCreateUpdateEvent),
+    /// Sent when a guild soundboard sound is updated
+    GuildSoundboardSoundUpdate(GuildSoundboardSoundCreateUpdateEvent),
+    /// Sent when multiple guild soundboard sounds are updated.
+    GuildSoundboardSoundsUpdate(GuildSoundboardSoundsUpdateEvent),
+    /// Sent when a guild soundboard sound is deleted
+    GuildSoundboardSoundDelete(GuildSoundboardSoundDeleteEvent),
+    /// Sent when someone sends an effect, such as an emoji reaction or a soundboard sound, in a
+    /// voice channel the current user is connected to.
+    VoiceChannelEffectSend(VoiceChannelEffectSendEvent),
 }
 
 impl Event {
