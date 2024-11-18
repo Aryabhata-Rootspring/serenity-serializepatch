@@ -44,7 +44,7 @@ impl SoundboardSoundId {
     /// #
     /// # fn run(sound: SoundboardSound) {
     /// // assuming sound has been set already
-    /// println!("Direct link to sound file: {}", sound.url());
+    /// println!("Direct link to sound file: {}", sound.id.url());
     /// # }
     /// ```
     #[must_use]
