@@ -487,7 +487,11 @@ bitflags! {
         /// Enables the following gateway events:
         /// - GUILD_EMOJIS_UPDATE
         /// - GUILD_STICKERS_UPDATE
-        const GUILD_EMOJIS_AND_STICKERS = 1 << 3;
+        /// - GUILD_SOUNDBOARD_SOUND_CREATE
+        /// - GUILD_SOUNDBOARD_SOUND_UPDATE
+        /// - GUILD_SOUNDBOARD_SOUND_DELETE
+        /// - GUILD_SOUNDBOARD_SOUNDS_UPDATE
+        const GUILD_EXPRESSIONS = 1 << 3;
         /// Enables the following gateway events:
         /// - GUILD_INTEGRATIONS_UPDATE
         /// - INTEGRATION_CREATE
@@ -632,13 +636,23 @@ impl GatewayIntents {
         self.contains(Self::GUILD_MODERATION)
     }
 
-    /// Shorthand for checking that the set of intents contains the [GUILD_EMOJIS_AND_STICKERS]
+    /// Shorthand for checking that the set of intents contains the [GUILD_EXPRESSIONS ]
     /// intent.
     ///
-    /// [GUILD_EMOJIS_AND_STICKERS]: Self::GUILD_EMOJIS_AND_STICKERS
+    /// [GUILD_EXPRESSIONS ]: Self::GUILD_EXPRESSIONS
     #[must_use]
+    #[deprecated = "Use `guild_expressions` instead"]
     pub const fn guild_emojis_and_stickers(self) -> bool {
-        self.contains(Self::GUILD_EMOJIS_AND_STICKERS)
+        self.contains(Self::GUILD_EXPRESSIONS)
+    }
+
+    /// Shorthand for checking that the set of intents contains the [GUILD_EXPRESSIONS ]
+    /// intent.
+    ///
+    /// [GUILD_EXPRESSIONS ]: Self::GUILD_EXPRESSIONS
+    #[must_use]
+    pub const fn guild_expressions(self) -> bool {
+        self.contains(Self::GUILD_EXPRESSIONS)
     }
 
     /// Shorthand for checking that the set of intents contains the [GUILD_INTEGRATIONS] intent.

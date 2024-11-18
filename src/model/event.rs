@@ -193,7 +193,7 @@ pub struct GuildDeleteEvent {
     pub guild: UnavailableGuild,
 }
 
-/// Requires [`GatewayIntents::GUILD_EMOJIS_AND_STICKERS`].
+/// Requires [`GatewayIntents::GUILD_EXPRESSIONS`].
 ///
 /// [Discord docs](https://discord.com/developers/docs/topics/gateway-events#guild-emojis-update).
 #[cfg_attr(feature = "typesize", derive(typesize::derive::TypeSize))]
@@ -364,7 +364,7 @@ impl<'de> Deserialize<'de> for GuildRoleUpdateEvent {
     }
 }
 
-/// Requires [`GatewayIntents::GUILD_EMOJIS_AND_STICKERS`].
+/// Requires [`GatewayIntents::GUILD_EXPRESSIONS`].
 ///
 /// [Discord docs](https://discord.com/developers/docs/topics/gateway-events#guild-stickers-update).
 #[cfg_attr(feature = "typesize", derive(typesize::derive::TypeSize))]
