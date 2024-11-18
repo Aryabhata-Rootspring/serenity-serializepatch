@@ -1117,6 +1117,17 @@ pub struct VoiceChannelEffectSendEvent {
     pub sound_volume: Option<f64>,
 }
 
+/// Includes a guild's list of soundboard sounds
+///
+/// Sent in response to the Request Soundboard Sounds.
+#[cfg_attr(feature = "typesize", derive(typesize::derive::TypeSize))]
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[non_exhaustive]
+pub struct SoundboardSoundsEvent {
+    pub guild_id: GuildId,
+    pub soundboard_sounds: Vec<SoundboardSound>,
+}
+
 /// [Discord docs](https://discord.com/developers/docs/topics/gateway-events#payload-structure).
 #[cfg_attr(feature = "typesize", derive(typesize::derive::TypeSize))]
 #[derive(Debug, Clone, Serialize)]
@@ -1386,6 +1397,10 @@ pub enum Event {
     /// Sent when someone sends an effect, such as an emoji reaction or a soundboard sound, in a
     /// voice channel the current user is connected to.
     VoiceChannelEffectSend(VoiceChannelEffectSendEvent),
+    /// Includes a guild's list of soundboard sounds.
+    ///
+    /// Sent in response to Request Soundboard Sounds.
+    SoundboardSounds(SoundboardSoundsEvent),
 }
 
 impl Event {

@@ -516,6 +516,11 @@ event_handler! {
 
     /// Sent when someone sends an effect, such as an emoji reaction or a soundboard sound, in a voice channel the current user is connected to.
     VoiceChannelEffectSend { event: VoiceChannelEffectSendEvent } => async fn voice_channel_effect_send(&self, ctx: Context);
+
+    /// Includes a guild's list of soundboard sounds.
+    ///
+    /// Sent in response to Request Soundboard Sounds.
+    SoundboardSounds { guild_id: GuildId, sounds: Vec<SoundboardSound> } => async fn soundboard_sounds(&self, ctx: Context);
 }
 
 /// This core trait for handling raw events

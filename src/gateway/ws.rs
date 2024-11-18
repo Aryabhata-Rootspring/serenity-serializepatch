@@ -67,6 +67,9 @@ enum WebSocketMessageData<'a> {
         token: &'a str,
         seq: u64,
     },
+    RequestSoundboardSounds {
+        guild_ids: Vec<GuildId>,
+    },
 }
 
 #[derive(Serialize)]
@@ -190,6 +193,23 @@ impl WsClient {
                 user_ids,
                 nonce: nonce.unwrap_or(""),
             }),
+        })
+        .await
+    }
+
+    #[expect(clippy::missing_errors_doc)]
+    pub async fn send_request_soundboard_sounds(
+        &mut self,
+        shard_info: &ShardInfo,
+        guild_ids: Vec<GuildId>,
+    ) -> Result<()> {
+        debug!("[{:?}] Requesting soundboard sounds for guild id: {:?}", shard_info, guild_ids);
+
+        self.send_json(&WebSocketMessage {
+            op: Opcode::RequestSoundboardSounds,
+            d: WebSocketMessageData::RequestSoundboardSounds {
+                guild_ids,
+            },
         })
         .await
     }

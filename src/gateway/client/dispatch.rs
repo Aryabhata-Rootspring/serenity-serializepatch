@@ -495,6 +495,10 @@ fn update_cache_with_event(
         Event::VoiceChannelEffectSend(event) => FullEvent::VoiceChannelEffectSend {
             event,
         },
+        Event::SoundboardSounds(event) => FullEvent::SoundboardSounds {
+            sounds: event.soundboard_sounds,
+            guild_id: event.guild_id,
+        },
     };
 
     (event, extra_event)

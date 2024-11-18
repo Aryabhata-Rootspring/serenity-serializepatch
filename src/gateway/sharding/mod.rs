@@ -702,6 +702,20 @@ impl Shard {
             .await
     }
 
+    /// Requests that soundboard sounds for a list of GuildId's. The server will send Soundboard
+    /// Sounds events for each guild in response.
+    ///
+    ///
+    /// # Errors
+    /// Errors if there is a problem with the WS connection.
+    ///
+    /// [`Event::GuildMembersChunk`]: crate::model::event::Event::GuildMembersChunk
+    /// [`GuildId`]: crate::model::guild::GuildId
+    #[cfg_attr(feature = "tracing_instrument", instrument(skip(self)))]
+    pub async fn request_soundboard_sounds(&mut self, guild_ids: Vec<GuildId>) -> Result<()> {
+        self.client.send_request_soundboard_sounds(&self.shard_info, guild_ids).await
+    }
+
     /// Sets the shard as going into identifying stage, which sets:
     /// - the time that the last heartbeat sent as being now
     /// - the `stage` to [`ConnectionStage::Identifying`]
