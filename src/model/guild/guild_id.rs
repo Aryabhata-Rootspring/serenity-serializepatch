@@ -161,9 +161,9 @@ impl GuildId {
         builder.execute(http, self, user_id).await
     }
 
-    /// Ban a [`User`] from the guild, deleting a number of seconds' worth of messages (`dms`) between
-    /// the range 0 and 604800 (subject to change). To ban someone for X days', multiply X by
-    /// 86400.
+    /// Ban a [`User`] from the guild, deleting a number of seconds' worth of messages (`dms`)
+    /// between the range 0 and 604800 (subject to change). To ban someone for X days', multiply
+    /// X by 86400.
     ///
     /// **Note**: Requires the [Ban Members] permission.
     ///
@@ -191,7 +191,13 @@ impl GuildId {
     /// Can return [`Error::Http`] if the current user lacks permission.
     ///
     /// [Ban Members]: Permissions::BAN_MEMBERS
-    pub async fn ban(self, http: &Http, user: UserId, dms: u32, reason: Option<&str>) -> Result<()> {
+    pub async fn ban(
+        self,
+        http: &Http,
+        user: UserId,
+        dms: u32,
+        reason: Option<&str>,
+    ) -> Result<()> {
         http.ban_user(self, user, dms, reason).await
     }
 
