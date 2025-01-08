@@ -162,7 +162,7 @@ impl GuildId {
     }
 
     /// Ban a [`User`] from the guild, deleting a number of seconds' worth of messages (`dms`)
-    /// between the range 0 and 604800 (subject to change). To ban someone for X days', multiply
+    /// `dms` should be between 0 and 604800 (subject to change). To ban someone for X days, multiply
     /// X by 86400.
     ///
     /// **Note**: Requires the [Ban Members] permission.
