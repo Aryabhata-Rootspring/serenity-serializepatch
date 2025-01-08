@@ -133,7 +133,7 @@ impl Member {
         Ok(())
     }
 
-    /// Ban a [`User`] from the guild, deleting a number of days' worth of messages (`dmd`) between
+    /// Ban a [`User`] from the guild, deleting `dms` seconds worth of messages from them.
     /// the range 0 and 604800. To ban someone for X days', multiply X by 86400
     ///
     /// **Note**: Requires the [Ban Members] permission.
