@@ -161,7 +161,7 @@ impl GuildId {
         builder.execute(http, self, user_id).await
     }
 
-    /// Ban a [`User`] from the guild, deleting a number of seconds' worth of messages (`dms`)
+    /// Ban a [`User`] from the guild, deleting `dms` seconds worth of messages from them.
     /// `dms` should be between 0 and 604800 (subject to change). To ban someone for X days, multiply
     /// X by 86400.
     ///
