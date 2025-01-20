@@ -23,6 +23,9 @@ use crate::model::prelude::*;
 pub struct ComponentInteraction {
     /// Id of the interaction.
     pub id: InteractionId,
+    /// The type of interaction.
+    #[serde(rename = "type")]
+    pub kind: InteractionType,
     /// Id of the application this interaction is for.
     pub application_id: ApplicationId,
     /// The data of the interaction which was triggered.

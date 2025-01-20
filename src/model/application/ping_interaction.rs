@@ -11,6 +11,9 @@ use crate::model::prelude::*;
 pub struct PingInteraction {
     /// Id of the interaction.
     pub id: InteractionId,
+    /// The type of interaction.
+    #[serde(rename = "type")]
+    pub kind: InteractionType,
     /// Id of the application this interaction is for.
     pub application_id: ApplicationId,
     /// A continuation token for responding to the interaction.
